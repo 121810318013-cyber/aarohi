@@ -1,0 +1,108 @@
+import { Product } from '@/types/product';
+import saree1 from '@/assets/saree1.jpg';
+import saree1Alt from '@/assets/saree1-alt.jpg';
+import saree2 from '@/assets/saree2.jpg';
+import saree2Alt from '@/assets/saree2-alt.jpg';
+import saree3 from '@/assets/saree3.jpg';
+import saree3Alt from '@/assets/saree3-alt.jpg';
+import saree4 from '@/assets/saree4.jpg';
+import saree4Alt from '@/assets/saree4-alt.jpg';
+
+export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Teal Silk Saree',
+    description: 'Elegant teal silk saree with intricate gold embroidery and traditional patterns. Perfect for weddings and special occasions.',
+    price: 8999,
+    discountPrice: 6999,
+    discountPercent: 22,
+    images: [saree1, saree1Alt],
+    category: 'Silk',
+    fabricType: 'Pure Silk',
+    inStock: true,
+  },
+  {
+    id: '2',
+    name: 'Red Wedding Saree',
+    description: 'Luxurious red wedding saree with heavy gold embroidery and embellishments. A timeless choice for brides.',
+    price: 15999,
+    discountPrice: 12999,
+    discountPercent: 19,
+    images: [saree2, saree2Alt],
+    category: 'Wedding',
+    fabricType: 'Silk Blend',
+    inStock: true,
+  },
+  {
+    id: '3',
+    name: 'Pink Floral Saree',
+    description: 'Beautiful pastel pink silk saree with delicate floral embroidery and golden border. Ideal for festive occasions.',
+    price: 7999,
+    discountPrice: 5999,
+    discountPercent: 25,
+    images: [saree3, saree3Alt],
+    category: 'Festive',
+    fabricType: 'Pure Silk',
+    inStock: true,
+  },
+  {
+    id: '4',
+    name: 'Royal Blue Banarasi',
+    description: 'Stunning royal blue Banarasi silk saree with intricate gold zari work and traditional motifs.',
+    price: 12999,
+    discountPrice: 9999,
+    discountPercent: 23,
+    images: [saree4, saree4Alt],
+    category: 'Banarasi',
+    fabricType: 'Banarasi Silk',
+    inStock: true,
+  },
+  {
+    id: '5',
+    name: 'Golden Kanjivaram',
+    description: 'Traditional golden Kanjivaram silk saree with rich texture and elegant design.',
+    price: 18999,
+    discountPrice: 14999,
+    discountPercent: 21,
+    images: [saree1, saree1Alt],
+    category: 'Kanjivaram',
+    fabricType: 'Kanjivaram Silk',
+    inStock: true,
+  },
+  {
+    id: '6',
+    name: 'Green Designer Saree',
+    description: 'Contemporary designer saree in emerald green with modern patterns and embellishments.',
+    price: 9999,
+    discountPrice: 7499,
+    discountPercent: 25,
+    images: [saree2, saree2Alt],
+    category: 'Designer',
+    fabricType: 'Georgette',
+    inStock: true,
+  },
+  {
+    id: '7',
+    name: 'Maroon Silk Saree',
+    description: 'Rich maroon silk saree with golden border and intricate weaving work.',
+    price: 8499,
+    discountPrice: 6499,
+    discountPercent: 24,
+    images: [saree3, saree3Alt],
+    category: 'Silk',
+    fabricType: 'Pure Silk',
+    inStock: true,
+  },
+  {
+    id: '8',
+    name: 'Purple Festive Saree',
+    description: 'Vibrant purple saree with silver work, perfect for festive celebrations.',
+    price: 7499,
+    discountPrice: 5999,
+    discountPercent: 20,
+    images: [saree4, saree4Alt],
+    category: 'Festive',
+    fabricType: 'Chiffon',
+    inStock: true,
+  },
+];
