@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 export const Footer = () => {
   return (
@@ -8,7 +9,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-gradient-primary">Aarohi Selections</h3>
+            <Link to="/" className="inline-block mb-4">
+              <img src={logo} alt="Aarohi Selections Logo" className="h-16 w-auto" />
+            </Link>
             <p className="text-sm text-muted-foreground">
               Your destination for authentic and elegant Indian sarees. Quality craftsmanship meets timeless tradition.
             </p>

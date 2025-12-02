@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Heart, Sparkles, Award, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import logo from '@/assets/logo.png';
 
 const About = () => {
   const values = [
@@ -36,6 +37,7 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl mx-auto text-center"
           >
+            <img src={logo} alt="Aarohi Selections Logo" className="h-24 w-auto mx-auto mb-6" />
             <h1 className="text-4xl md:text-6xl font-bold mb-6">About Aarohi Selections</h1>
             <p className="text-xl md:text-2xl text-white/90">
               Your destination for authentic and exquisite Indian sarees

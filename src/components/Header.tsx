@@ -5,6 +5,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '@/assets/logo.png';
 
 export const Header = () => {
   const { cartCount } = useCart();
@@ -21,8 +22,11 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 transition-smooth hover:opacity-80">
-            <h1 className="text-2xl font-bold text-gradient-primary">Aarohi Selections</h1>
+          <Link to="/" className="flex items-center space-x-3 transition-smooth hover:opacity-80">
+            <img src={logo} alt="Aarohi Selections Logo" className="h-10 w-auto" />
+            <h1 className="text-xl md:text-2xl font-bold text-gradient-primary hidden sm:block">
+              Aarohi Selections
+            </h1>
           </Link>
 
           {/* Desktop Navigation */}
