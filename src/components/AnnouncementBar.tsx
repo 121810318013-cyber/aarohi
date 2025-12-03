@@ -13,30 +13,33 @@ const defaultMessages = [
 ];
 
 export const AnnouncementBar = ({ messages = defaultMessages }: AnnouncementBarProps) => {
-  const repeatedMessages = [...messages, ...messages, ...messages];
+  // Repeat messages many times for seamless infinite scroll
+  const repeatedMessages = [...messages, ...messages, ...messages, ...messages];
 
   return (
     <div className="bg-gradient-primary text-primary-foreground py-2 overflow-hidden">
-      <motion.div
-        className="flex whitespace-nowrap"
-        animate={{
-          x: ['0%', '-33.33%'],
-        }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: 'loop',
-            duration: 30,
-            ease: 'linear',
-          },
-        }}
-      >
-        {repeatedMessages.map((message, index) => (
-          <span key={index} className="mx-8 text-sm font-medium">
-            {message}
-          </span>
-        ))}
-      </motion.div>
+      <div className="flex">
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{
+            x: ['0%', '-50%'],
+          }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: 15,
+              ease: 'linear',
+            },
+          }}
+        >
+          {repeatedMessages.map((message, index) => (
+            <span key={index} className="mx-8 text-sm font-medium">
+              {message}
+            </span>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };

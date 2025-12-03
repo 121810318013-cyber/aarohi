@@ -8,6 +8,19 @@ import saree3Alt from '@/assets/saree3-alt.jpg';
 import saree4 from '@/assets/saree4.jpg';
 import saree4Alt from '@/assets/saree4-alt.jpg';
 
+export const productColors = [
+  { name: 'Teal', value: '#0d9488' },
+  { name: 'Red', value: '#dc2626' },
+  { name: 'Pink', value: '#ec4899' },
+  { name: 'Blue', value: '#2563eb' },
+  { name: 'Gold', value: '#ca8a04' },
+  { name: 'Green', value: '#16a34a' },
+  { name: 'Maroon', value: '#881337' },
+  { name: 'Purple', value: '#7c3aed' },
+  { name: 'Orange', value: '#ea580c' },
+  { name: 'Black', value: '#171717' },
+];
+
 export const products: Product[] = [
   {
     id: '1',
@@ -19,6 +32,7 @@ export const products: Product[] = [
     images: [saree1, saree1Alt],
     category: 'Silk',
     fabricType: 'Pure Silk',
+    colors: ['Teal', 'Gold'],
     inStock: true,
   },
   {
@@ -31,6 +45,7 @@ export const products: Product[] = [
     images: [saree2, saree2Alt],
     category: 'Wedding',
     fabricType: 'Silk Blend',
+    colors: ['Red', 'Gold'],
     inStock: true,
   },
   {
@@ -43,6 +58,7 @@ export const products: Product[] = [
     images: [saree3, saree3Alt],
     category: 'Festive',
     fabricType: 'Pure Silk',
+    colors: ['Pink', 'Gold'],
     inStock: true,
   },
   {
@@ -55,6 +71,7 @@ export const products: Product[] = [
     images: [saree4, saree4Alt],
     category: 'Banarasi',
     fabricType: 'Banarasi Silk',
+    colors: ['Blue', 'Gold'],
     inStock: true,
   },
   {
@@ -67,6 +84,7 @@ export const products: Product[] = [
     images: [saree1, saree1Alt],
     category: 'Kanjivaram',
     fabricType: 'Kanjivaram Silk',
+    colors: ['Gold', 'Maroon'],
     inStock: true,
   },
   {
@@ -79,6 +97,7 @@ export const products: Product[] = [
     images: [saree2, saree2Alt],
     category: 'Designer',
     fabricType: 'Georgette',
+    colors: ['Green', 'Gold'],
     inStock: true,
   },
   {
@@ -91,6 +110,7 @@ export const products: Product[] = [
     images: [saree3, saree3Alt],
     category: 'Silk',
     fabricType: 'Pure Silk',
+    colors: ['Maroon', 'Gold'],
     inStock: true,
   },
   {
@@ -103,6 +123,7 @@ export const products: Product[] = [
     images: [saree4, saree4Alt],
     category: 'Festive',
     fabricType: 'Chiffon',
+    colors: ['Purple', 'Gold'],
     inStock: true,
   },
 ];

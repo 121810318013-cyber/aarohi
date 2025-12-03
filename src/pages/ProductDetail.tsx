@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { products } from '@/data/products';
+import { products, productColors } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus, ArrowLeft } from 'lucide-react';
@@ -147,6 +147,25 @@ const ProductDetail = () => {
           <div className="border-t border-border pt-6">
             <h3 className="font-semibold mb-3">Product Description</h3>
             <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+          </div>
+
+          {/* Colors */}
+          <div className="border-t border-border pt-6">
+            <h3 className="font-semibold mb-3">Available Colors</h3>
+            <div className="flex flex-wrap gap-3">
+              {product.colors.map((colorName) => {
+                const colorData = productColors.find(c => c.name === colorName);
+                return (
+                  <div key={colorName} className="flex items-center gap-2">
+                    <div 
+                      className="w-6 h-6 rounded-full border-2 border-border shadow-sm"
+                      style={{ backgroundColor: colorData?.value || '#888' }}
+                    />
+                    <span className="text-sm text-muted-foreground">{colorName}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <div className="border-t border-border pt-6">
