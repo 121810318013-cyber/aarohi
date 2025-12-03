@@ -8,6 +8,7 @@ export interface Product {
   images: string[];
   category: string;
   fabricType: string;
+  colors: string[];
   inStock: boolean;
 }
 

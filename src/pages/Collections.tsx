@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ProductCard } from '@/components/ProductCard';
-import { products } from '@/data/products';
+import { products, productColors } from '@/data/products';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -26,6 +26,7 @@ const Collections = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedFabric, setSelectedFabric] = useState<string>('All');
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>('default');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 20000]);
   const [showOnlyDiscount, setShowOnlyDiscount] = useState(false);
@@ -34,6 +35,17 @@ const Collections = () => {
 
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
   const fabricTypes = ['All', ...Array.from(new Set(products.map(p => p.fabricType)))];
+  const availableColors = productColors.filter(color => 
+    products.some(p => p.colors.includes(color.name))
+  );
+
+  const toggleColor = (colorName: string) => {
+    setSelectedColors(prev => 
+      prev.includes(colorName) 
+        ? prev.filter(c => c !== colorName)
+        : [...prev, colorName]
+    );
+  };
 
   const maxPrice = Math.max(...products.map(p => p.price));
   const minPrice = Math.min(...products.map(p => p.discountPrice || p.price));
@@ -44,12 +56,13 @@ const Collections = () => {
                           product.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
       const matchesFabric = selectedFabric === 'All' || product.fabricType === selectedFabric;
+      const matchesColors = selectedColors.length === 0 || selectedColors.some(c => product.colors.includes(c));
       const price = product.discountPrice || product.price;
       const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
       const matchesDiscount = !showOnlyDiscount || (product.discountPercent && product.discountPercent > 0);
       const matchesStock = !showInStock || product.inStock;
       
-      return matchesSearch && matchesCategory && matchesFabric && matchesPrice && matchesDiscount && matchesStock;
+      return matchesSearch && matchesCategory && matchesFabric && matchesColors && matchesPrice && matchesDiscount && matchesStock;
     });
 
     // Apply sorting
@@ -72,12 +85,13 @@ const Collections = () => {
     }
 
     return result;
-  }, [searchQuery, selectedCategory, selectedFabric, sortBy, priceRange, showOnlyDiscount, showInStock]);
+  }, [searchQuery, selectedCategory, selectedFabric, selectedColors, sortBy, priceRange, showOnlyDiscount, showInStock]);
 
   const clearAllFilters = () => {
     setSearchQuery('');
     setSelectedCategory('All');
     setSelectedFabric('All');
+    setSelectedColors([]);
     setSortBy('default');
     setPriceRange([0, 20000]);
     setShowOnlyDiscount(false);
@@ -87,6 +101,7 @@ const Collections = () => {
   const activeFiltersCount = [
     selectedCategory !== 'All',
     selectedFabric !== 'All',
+    selectedColors.length > 0,
     priceRange[0] !== 0 || priceRange[1] !== 20000,
     showOnlyDiscount,
     showInStock,
@@ -126,6 +141,30 @@ const Collections = () => {
             >
               {fabric}
             </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Color Filter */}
+      <div>
+        <h3 className="text-sm font-semibold mb-3">Colors</h3>
+        <div className="flex flex-wrap gap-2">
+          {availableColors.map(color => (
+            <button
+              key={color.name}
+              onClick={() => toggleColor(color.name)}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2 transition-smooth text-sm ${
+                selectedColors.includes(color.name)
+                  ? 'border-primary bg-primary/10'
+                  : 'border-border hover:border-primary/50'
+              }`}
+            >
+              <div 
+                className="w-4 h-4 rounded-full border border-border"
+                style={{ backgroundColor: color.value }}
+              />
+              <span>{color.name}</span>
+            </button>
           ))}
         </div>
       </div>
