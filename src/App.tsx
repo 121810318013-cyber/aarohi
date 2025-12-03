@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PeacockAnimation } from "@/components/PeacockAnimation";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 import Home from "./pages/Home";
 import Collections from "./pages/Collections";
 import ProductDetail from "./pages/ProductDetail";
@@ -13,6 +16,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import ReturnsPolicy from "./pages/ReturnsPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,9 +28,11 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen relative">
+            <PeacockAnimation />
+            <AnnouncementBar />
             <Header />
-            <main className="flex-1">
+            <main className="flex-1 relative z-10">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/collections" element={<Collections />} />
@@ -35,11 +41,13 @@ const App = () => (
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/returns-policy" element={<ReturnsPolicy />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />
+            <FloatingWhatsApp />
           </div>
         </BrowserRouter>
       </CartProvider>

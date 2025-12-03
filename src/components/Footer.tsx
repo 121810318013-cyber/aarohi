@@ -41,6 +41,11 @@ export const Footer = () => {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link to="/returns-policy" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                  Returns Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
