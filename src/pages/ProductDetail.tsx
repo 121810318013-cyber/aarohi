@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { products, productColors } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { ShoppingCart, Plus, Minus, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, ArrowLeft, Share2 } from 'lucide-react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { motion } from 'framer-motion';
+import { WishlistButton } from '@/components/WishlistButton';
+import { SizeGuide } from '@/components/SizeGuide';
+import { RecentlyViewed, addToRecentlyViewed } from '@/components/RecentlyViewed';
+import { toast } from 'sonner';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +18,29 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   
   const cartItem = product ? cart.find(item => item.id === product.id) : null;
+
+  useEffect(() => {
+    if (id) {
+      addToRecentlyViewed(id);
+    }
+  }, [id]);
+
+  const handleShare = async () => {
+    if (navigator.share && product) {
+      try {
+        await navigator.share({
+          title: product.name,
+          text: product.description,
+          url: window.location.href,
+        });
+      } catch {
+        // User cancelled or share failed
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success('Link copied to clipboard!');
+    }
+  };
 
   if (!product) {
     return (
@@ -45,18 +72,26 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen container mx-auto px-4 py-8">
+    <div className="min-h-screen container mx-auto px-4 py-4 sm:py-8">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="mb-6"
+        className="mb-4 sm:mb-6 flex items-center justify-between"
       >
         <Link to="/collections">
           <Button variant="ghost" className="group">
             <ArrowLeft className="mr-2 h-4 w-4 transition-smooth group-hover:-translate-x-1" />
-            Back to Collections
+            <span className="hidden sm:inline">Back to Collections</span>
+            <span className="sm:hidden">Back</span>
           </Button>
         </Link>
+        <div className="flex items-center gap-2">
+          <SizeGuide />
+          <Button variant="ghost" size="icon" onClick={handleShare}>
+            <Share2 className="h-5 w-5" />
+          </Button>
+          <WishlistButton productId={product.id} productName={product.name} />
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -233,6 +268,9 @@ const ProductDetail = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Recently Viewed */}
+      <RecentlyViewed currentProductId={id} />
     </div>
   );
 };

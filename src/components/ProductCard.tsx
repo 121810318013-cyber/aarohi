@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { WishlistButton } from './WishlistButton';
 
 interface ProductCardProps {
   product: Product;
@@ -42,6 +43,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         whileHover={{ y: -8 }}
+        transition={{ duration: 0.3 }}
         className="group relative overflow-hidden rounded-lg border border-border bg-card shadow-elegant transition-smooth hover:shadow-lg"
       >
         {/* Image Carousel */}
@@ -55,24 +57,42 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               key={currentImageIndex}
               src={product.images[currentImageIndex]}
               alt={product.name}
-              className="h-full w-full object-cover transition-smooth group-hover:scale-110"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              className="h-full w-full object-cover"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
             />
           </AnimatePresence>
+
+          {/* Hover Overlay */}
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent"
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
 
           {/* Discount Badge */}
           {product.discountPercent && (
             <motion.div
-              initial={{ scale: 0, rotate: -45 }}
+              initial={{ scale: 0, rotate: -15 }}
               animate={{ scale: 1, rotate: 0 }}
-              className="absolute top-2 left-2 bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-bold shadow-md"
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-bold shadow-md"
             >
               {product.discountPercent}% OFF
             </motion.div>
           )}
+
+          {/* Wishlist Button */}
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <WishlistButton 
+              productId={product.id} 
+              productName={product.name}
+              className="bg-background/80 backdrop-blur-sm hover:bg-background"
+            />
+          </div>
         </div>
 
         {/* Content */}
