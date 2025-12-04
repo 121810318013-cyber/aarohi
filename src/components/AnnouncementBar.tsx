@@ -28,7 +28,7 @@ export const AnnouncementBar = ({ messages = defaultMessages }: AnnouncementBarP
             x: {
               repeat: Infinity,
               repeatType: 'loop',
-              duration: 15,
+              duration: 30,
               ease: 'linear',
             },
           }}
