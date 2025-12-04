@@ -1,15 +1,35 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart, Menu, X, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useCart } from '@/context/CartContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {
   const { cartCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    const updateWishlistCount = () => {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      setWishlistCount(wishlist.length);
+    };
+    
+    updateWishlistCount();
+    window.addEventListener('storage', updateWishlistCount);
+    
+    // Custom event for same-tab updates
+    const handleWishlistUpdate = () => updateWishlistCount();
+    window.addEventListener('wishlistUpdated', handleWishlistUpdate);
+    
+    return () => {
+      window.removeEventListener('storage', updateWishlistCount);
+      window.removeEventListener('wishlistUpdated', handleWishlistUpdate);
+    };
+  }, []);
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -19,7 +39,7 @@ export const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 transition-smooth hover:opacity-80">
@@ -45,6 +65,20 @@ export const Header = () => {
           {/* Right Section */}
           <div className="flex items-center space-x-2">
             <ThemeToggle />
+            <Link to="/wishlist">
+              <Button variant="ghost" size="icon" className="relative transition-smooth hover:scale-110 hover:bg-primary/10">
+                <Heart className="h-5 w-5" />
+                {wishlistCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center"
+                  >
+                    {wishlistCount}
+                  </motion.span>
+                )}
+              </Button>
+            </Link>
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative transition-smooth hover:scale-110 hover:bg-primary/10">
                 <ShoppingCart className="h-5 w-5" />

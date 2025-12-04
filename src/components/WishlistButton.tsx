@@ -36,6 +36,9 @@ export const WishlistButton = ({ productId, productName, className = '', size = 
       setIsWishlisted(true);
       toast.success(`${productName} added to wishlist`);
     }
+    
+    // Dispatch custom event for same-tab updates
+    window.dispatchEvent(new Event('wishlistUpdated'));
   };
 
   return (

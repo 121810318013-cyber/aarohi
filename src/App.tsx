@@ -17,6 +17,7 @@ import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import ReturnsPolicy from "./pages/ReturnsPolicy";
+import Wishlist from "./pages/Wishlist";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,8 +31,10 @@ const App = () => (
         <BrowserRouter>
           <div className="flex flex-col min-h-screen relative">
             <PeacockAnimation />
-            <AnnouncementBar />
-            <Header />
+            <div className="sticky top-0 z-50">
+              <AnnouncementBar />
+              <Header />
+            </div>
             <main className="flex-1 relative z-10">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -42,6 +45,7 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/returns-policy" element={<ReturnsPolicy />} />
+                <Route path="/wishlist" element={<Wishlist />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
