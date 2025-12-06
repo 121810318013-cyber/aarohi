@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ProductCard';
 import { products } from '@/data/products';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, Shield, Truck, HeartHandshake } from 'lucide-react';
+import { ParallaxSection, ParallaxText } from '@/components/ParallaxSection';
+import { ProductGridSkeleton } from '@/components/ProductCardSkeleton';
 import heroBanner1 from '@/assets/hero-banner-1.jpg';
 import heroBanner2 from '@/assets/hero-banner-2.jpg';
 import heroBanner3 from '@/assets/hero-banner-3.jpg';
@@ -39,7 +41,12 @@ const fadeInUp = {
 
 const Home = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const featuredProducts = products.slice(0, 4);
+  
+  const { scrollY } = useScroll();
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  const heroScale = useTransform(scrollY, [0, 300], [1, 1.1]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,61 +55,72 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen overflow-hidden">
-      {/* Hero Banner */}
-      <section className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentBanner}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="absolute inset-0"
-          >
+      {/* Hero Banner with Parallax */}
+      <motion.section 
+        style={{ opacity: heroOpacity }}
+        className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden"
+      >
+        <motion.div style={{ scale: heroScale }} className="absolute inset-0">
+          <AnimatePresence mode="wait">
             <motion.div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${banners[currentBanner].image})` }}
-              animate={{ scale: [1, 1.05] }}
-              transition={{ duration: 6, ease: "linear" }}
+              key={currentBanner}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="absolute inset-0"
             >
-              <div className="absolute inset-0 bg-gradient-hero" />
-            </motion.div>
-            <div className="relative container mx-auto px-4 h-full flex items-center">
               <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                className="max-w-2xl text-white"
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${banners[currentBanner].image})` }}
+                animate={{ scale: [1, 1.05] }}
+                transition={{ duration: 6, ease: "linear" }}
               >
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "4rem" }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  className="h-1 bg-accent mb-4 md:mb-6 rounded-full"
-                />
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 md:mb-4 leading-tight">
-                  {banners[currentBanner].title}
-                </h1>
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-8 text-white/90">
-                  {banners[currentBanner].subtitle}
-                </p>
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Link to="/collections">
-                    <Button size="lg" className="bg-accent hover:bg-accent-dark text-accent-foreground text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 transition-smooth shadow-glow group">
-                      <Sparkles className="mr-2 h-4 w-4 md:h-5 md:w-5 group-hover:rotate-12 transition-transform" />
-                      Explore Collections
-                    </Button>
-                  </Link>
-                </motion.div>
+                <div className="absolute inset-0 bg-gradient-hero" />
               </motion.div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+              <div className="relative container mx-auto px-4 h-full flex items-center">
+                <motion.div
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+                  className="max-w-2xl text-white"
+                >
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "4rem" }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    className="h-1 bg-accent mb-4 md:mb-6 rounded-full"
+                  />
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2 md:mb-4 leading-tight">
+                    {banners[currentBanner].title}
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 md:mb-8 text-white/90">
+                    {banners[currentBanner].subtitle}
+                  </p>
+                  <motion.div
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Link to="/collections">
+                      <Button size="lg" className="bg-accent hover:bg-accent-dark text-accent-foreground text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 transition-smooth shadow-glow group">
+                        <Sparkles className="mr-2 h-4 w-4 md:h-5 md:w-5 group-hover:rotate-12 transition-transform" />
+                        Explore Collections
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
 
         {/* Animated Indicators */}
         <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
@@ -130,10 +148,11 @@ const Home = () => {
             </button>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      {/* Featured Collections */}
-      <section className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
+      {/* Featured Collections with Parallax */}
+      <ParallaxSection speed={0.15} className="relative z-10">
+        <section className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -188,10 +207,12 @@ const Home = () => {
             </Button>
           </Link>
         </motion.div>
-      </section>
+        </section>
+      </ParallaxSection>
 
-      {/* Trust Badges */}
-      <section className="py-8 md:py-12 border-y border-border bg-muted/20">
+      {/* Trust Badges with Parallax */}
+      <ParallaxText speed={0.1}>
+        <section className="py-8 md:py-12 border-y border-border bg-muted/20">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={staggerContainer}
@@ -225,10 +246,12 @@ const Home = () => {
             ))}
           </motion.div>
         </div>
-      </section>
+        </section>
+      </ParallaxText>
 
-      {/* Why Choose Us */}
-      <section className="bg-muted/30 py-8 sm:py-12 md:py-16">
+      {/* Why Choose Us with Parallax */}
+      <ParallaxSection speed={0.1} direction="down">
+        <section className="bg-muted/30 py-8 sm:py-12 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
             variants={staggerContainer}
@@ -287,7 +310,8 @@ const Home = () => {
             ))}
           </motion.div>
         </div>
-      </section>
+        </section>
+      </ParallaxSection>
     </div>
   );
 };

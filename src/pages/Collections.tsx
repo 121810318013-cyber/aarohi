@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ProductCard } from '@/components/ProductCard';
 import { products, productColors } from '@/data/products';
 import { Input } from '@/components/ui/input';
@@ -8,6 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SaleCountdown } from '@/components/SaleCountdown';
+import { ProductGridSkeleton } from '@/components/ProductCardSkeleton';
 import {
   Sheet,
   SheetContent,
@@ -32,6 +33,13 @@ const Collections = () => {
   const [showOnlyDiscount, setShowOnlyDiscount] = useState(false);
   const [showInStock, setShowInStock] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
   const fabricTypes = ['All', ...Array.from(new Set(products.map(p => p.fabricType)))];
@@ -320,7 +328,11 @@ const Collections = () => {
             </p>
           </div>
 
-          {filteredProducts.length > 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+              <ProductGridSkeleton count={6} />
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
               {filteredProducts.map((product, index) => (
                 <motion.div

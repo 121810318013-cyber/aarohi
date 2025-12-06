@@ -10,6 +10,7 @@ import { PeacockAnimation } from "@/components/PeacockAnimation";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { PageTransition } from "@/components/PageTransition";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense } from "react";
 
@@ -66,6 +67,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen relative">
             <PeacockAnimation />
             <div className="sticky top-0 z-50">
