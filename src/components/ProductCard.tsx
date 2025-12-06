@@ -4,7 +4,7 @@ import { Product } from '@/types/product';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { WishlistButton } from './WishlistButton';
 
 interface ProductCardProps {
@@ -42,51 +42,64 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        whileHover={{ y: -8 }}
-        transition={{ duration: 0.3 }}
-        className="group relative overflow-hidden rounded-lg border border-border bg-card shadow-elegant transition-smooth hover:shadow-lg"
+        whileHover={{ y: -6, scale: 1.02 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300"
       >
-        {/* Image Carousel */}
+        {/* Image Container */}
         <div
           className="relative aspect-[3/4] overflow-hidden bg-muted"
           onMouseEnter={() => setCurrentImageIndex(1)}
           onMouseLeave={() => setCurrentImageIndex(0)}
         >
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={currentImageIndex}
-              src={product.images[currentImageIndex]}
-              alt={product.name}
-              className="h-full w-full object-cover"
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-            />
-          </AnimatePresence>
+          {/* Background Image (prevents flash) */}
+          <img
+            src={product.images[0]}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            aria-hidden="true"
+          />
+          
+          {/* Animated Image */}
+          <motion.img
+            key={currentImageIndex}
+            src={product.images[currentImageIndex] || product.images[0]}
+            alt={product.name}
+            className="absolute inset-0 h-full w-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
 
-          {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Subtle gradient for text readability */}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
 
           {/* Discount Badge */}
           {product.discountPercent && (
             <motion.div
               initial={{ scale: 0, rotate: -15 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              className="absolute top-2 left-2 bg-accent text-accent-foreground px-2 sm:px-3 py-1 rounded-full text-xs font-bold shadow-md"
+              transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
+              className="absolute top-3 left-3 bg-accent text-accent-foreground px-2.5 py-1 rounded-full text-xs font-bold shadow-lg"
             >
               {product.discountPercent}% OFF
             </motion.div>
           )}
 
-          {/* Wishlist Button */}
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          {/* Wishlist Button - Always visible with subtle background */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
             <WishlistButton 
               productId={product.id} 
               productName={product.name}
-              className="bg-background/80 backdrop-blur-sm hover:bg-background"
+              className="bg-background/90 backdrop-blur-sm hover:bg-background shadow-md"
             />
+          </div>
+
+          {/* Quick View Indicator */}
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center pb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <span className="text-white text-xs font-medium bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full">
+              View Details
+            </span>
           </div>
         </div>
 
