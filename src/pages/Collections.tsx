@@ -221,17 +221,17 @@ const Collections = () => {
   );
 
   return (
-    <div className="min-h-screen container mx-auto px-4 py-8">
+    <div className="min-h-screen container mx-auto px-3 sm:px-4 py-4 sm:py-8">
       {/* Sale Countdown */}
       <SaleCountdown endDate={SALE_END_DATE} isActive={SALE_ACTIVE} title="🔥 Festive Sale Ends In" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-4 sm:mb-8"
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Collections</h1>
-        <p className="text-lg text-muted-foreground">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4">Our Collections</h1>
+        <p className="text-sm sm:text-lg text-muted-foreground">
           Explore our exquisite range of traditional and contemporary sarees
         </p>
       </motion.div>
@@ -295,7 +295,7 @@ const Collections = () => {
         </div>
       </motion.div>
 
-      <div className="flex gap-8">
+      <div className="flex gap-4 lg:gap-8">
         {/* Desktop Filters Sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -303,7 +303,7 @@ const Collections = () => {
           transition={{ delay: 0.2 }}
           className="hidden lg:block w-64 flex-shrink-0"
         >
-          <div className="sticky top-24 bg-card rounded-lg border border-border p-4">
+          <div className="sticky top-28 bg-card rounded-lg border border-border p-4">
             <h2 className="font-semibold mb-4 flex items-center">
               <SlidersHorizontal className="h-4 w-4 mr-2" />
               Filters
@@ -314,14 +314,14 @@ const Collections = () => {
 
         {/* Products Grid */}
         <div className="flex-1">
-          <div className="mb-6 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
+          <div className="mb-4 sm:mb-6 flex items-center justify-between">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Showing {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
             </p>
           </div>
 
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
               {filteredProducts.map((product, index) => (
                 <motion.div
                   key={product.id}

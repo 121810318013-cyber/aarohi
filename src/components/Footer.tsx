@@ -4,45 +4,45 @@ import logo from '@/assets/logo.png';
 
 export const Footer = () => {
   return (
-    <footer className="bg-muted/30 border-t border-border mt-16">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-muted/30 border-t border-border mt-8 sm:mt-16">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {/* Brand */}
-          <div>
-            <Link to="/" className="inline-block mb-4">
-              <img src={logo} alt="Aarohi Selections Logo" className="h-16 w-auto" />
+          <div className="col-span-2 md:col-span-1">
+            <Link to="/" className="inline-block mb-3 sm:mb-4">
+              <img src={logo} alt="Aarohi Selections Logo" className="h-12 sm:h-16 w-auto" />
             </Link>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Your destination for authentic and elegant Indian sarees. Quality craftsmanship meets timeless tradition.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Quick Links</h4>
+            <ul className="space-y-1.5 sm:space-y-2">
               <li>
-                <Link to="/" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <Link to="/" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/collections" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <Link to="/collections" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Collections
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <Link to="/about" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <Link to="/contact" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/returns-policy" className="text-sm text-muted-foreground hover:text-primary transition-smooth">
+                <Link to="/returns-policy" className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth">
                   Returns Policy
                 </Link>
               </li>
@@ -51,47 +51,47 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
-            <ul className="space-y-3 text-sm text-muted-foreground">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Contact Us</h4>
+            <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted-foreground">
               <li className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-primary" />
-                <span>+91 XXXXX XXXXX</span>
+                <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                <span className="truncate">+91 XXXXX XXXXX</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Mail className="h-4 w-4 text-primary" />
-                <span>info@aarohiselections.com</span>
+                <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                <span className="truncate text-[10px] sm:text-sm">info@aarohiselections.com</span>
               </li>
               <li className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4 text-primary" />
+                <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
                 <span>Your Location</span>
               </li>
             </ul>
           </div>
 
           {/* Business Hours */}
-          <div>
-            <h4 className="font-semibold mb-4">Business Hours</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+          <div className="col-span-2 md:col-span-1">
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Business Hours</h4>
+            <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
               <li className="flex items-start space-x-2">
-                <Clock className="h-4 w-4 text-primary mt-0.5" />
+                <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <p>Monday - Saturday</p>
-                  <p className="text-xs">10:00 AM - 8:00 PM</p>
+                  <p className="text-[10px] sm:text-xs">10:00 AM - 8:00 PM</p>
                 </div>
               </li>
               <li className="flex items-start space-x-2">
-                <Clock className="h-4 w-4 text-primary mt-0.5" />
+                <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <p>Sunday</p>
-                  <p className="text-xs">10:00 AM - 8:00 PM</p>
+                  <p className="text-[10px] sm:text-xs">10:00 AM - 8:00 PM</p>
                 </div>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border text-center">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-border text-center">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             © {new Date().getFullYear()} Aarohi Selections. All rights reserved.
           </p>
         </div>
