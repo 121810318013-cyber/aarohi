@@ -6,7 +6,6 @@ import { products } from '@/data/products';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, Shield, Truck, HeartHandshake } from 'lucide-react';
 import { ParallaxSection, ParallaxText } from '@/components/ParallaxSection';
-import { ProductGridSkeleton } from '@/components/ProductCardSkeleton';
 import heroBanner1 from '@/assets/hero-banner-1.jpg';
 import heroBanner2 from '@/assets/hero-banner-2.jpg';
 import heroBanner3 from '@/assets/hero-banner-3.jpg';
@@ -41,7 +40,6 @@ const fadeInUp = {
 
 const Home = () => {
   const [currentBanner, setCurrentBanner] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const featuredProducts = products.slice(0, 4);
   
   const { scrollY } = useScroll();
@@ -55,11 +53,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="min-h-screen overflow-hidden">
