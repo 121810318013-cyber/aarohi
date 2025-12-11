@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -8,25 +8,21 @@ interface PageTransitionProps {
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
   },
   animate: {
     opacity: 1,
-    y: 0,
   },
   exit: {
     opacity: 0,
-    y: -20,
   },
 };
 
 const pageTransition = {
-  type: "tween" as const,
+  duration: 0.2,
   ease: "easeOut" as const,
-  duration: 0.3,
 };
 
-export const PageTransition = ({ children }: PageTransitionProps) => {
+export const PageTransition = memo(({ children }: PageTransitionProps) => {
   return (
     <motion.div
       initial="initial"
@@ -34,9 +30,11 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       exit="exit"
       variants={pageVariants}
       transition={pageTransition}
-      className="w-full"
+      className="w-full will-change-[opacity]"
     >
       {children}
     </motion.div>
   );
-};
+});
+
+PageTransition.displayName = 'PageTransition';

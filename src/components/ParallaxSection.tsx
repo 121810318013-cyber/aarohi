@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, useEffect, useState, memo } from 'react';
 
 interface ParallaxSectionProps {
   children: ReactNode;
@@ -8,32 +7,52 @@ interface ParallaxSectionProps {
   direction?: 'up' | 'down';
 }
 
-export const ParallaxSection = ({ 
+export const ParallaxSection = memo(({ 
   children, 
-  speed = 0.5, 
+  speed = 0.3, 
   className = '',
   direction = 'up'
 }: ParallaxSectionProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
+  const [offset, setOffset] = useState(0);
 
-  const multiplier = direction === 'up' ? -1 : 1;
-  const y = useTransform(scrollYProgress, [0, 1], [100 * speed * multiplier, -100 * speed * multiplier]);
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (ref.current) {
+            const rect = ref.current.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            const multiplier = direction === 'up' ? -1 : 1;
+            setOffset(progress * 50 * speed * multiplier);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [speed, direction]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      style={{ y }}
-      className={className}
+      style={{ transform: `translateY(${offset}px)` }}
+      className={`will-change-transform ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
-};
+});
+
+ParallaxSection.displayName = 'ParallaxSection';
 
 interface ParallaxImageProps {
   src: string;
@@ -42,28 +61,48 @@ interface ParallaxImageProps {
   speed?: number;
 }
 
-export const ParallaxImage = ({ src, alt, className = '', speed = 0.3 }: ParallaxImageProps) => {
+export const ParallaxImage = memo(({ src, alt, className = '', speed = 0.2 }: ParallaxImageProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
+  const [offset, setOffset] = useState(0);
 
-  const y = useTransform(scrollYProgress, [0, 1], [-50 * speed, 50 * speed]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.1, 1, 1.1]);
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (ref.current) {
+            const rect = ref.current.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            setOffset((progress - 0.5) * 30 * speed);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [speed]);
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.img
+      <img
         src={src}
         alt={alt}
-        style={{ y, scale }}
-        className="w-full h-full object-cover"
+        style={{ transform: `translateY(${offset}px) scale(1.05)` }}
+        className="w-full h-full object-cover will-change-transform"
+        loading="lazy"
       />
     </div>
   );
-};
+});
+
+ParallaxImage.displayName = 'ParallaxImage';
 
 interface ParallaxTextProps {
   children: ReactNode;
@@ -71,24 +110,43 @@ interface ParallaxTextProps {
   speed?: number;
 }
 
-export const ParallaxText = ({ children, className = '', speed = 0.2 }: ParallaxTextProps) => {
+export const ParallaxText = memo(({ children, className = '', speed = 0.1 }: ParallaxTextProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
+  const [offset, setOffset] = useState(0);
 
-  const y = useTransform(scrollYProgress, [0, 1], [30 * speed, -30 * speed]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.6, 1, 1, 0.6]);
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (ref.current) {
+            const rect = ref.current.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            setOffset((progress - 0.5) * 20 * speed);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [speed]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      style={{ y, opacity }}
-      className={className}
+      style={{ transform: `translateY(${offset}px)` }}
+      className={`will-change-transform ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
-};
+});
+
+ParallaxText.displayName = 'ParallaxText';

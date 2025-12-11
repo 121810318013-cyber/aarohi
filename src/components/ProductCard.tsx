@@ -4,7 +4,6 @@ import { Product } from '@/types/product';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { WishlistButton } from './WishlistButton';
 
 interface ProductCardProps {
@@ -39,12 +38,8 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Link to={`/product/${product.id}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        whileHover={{ y: -6, scale: 1.02 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300"
+      <div
+        className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 will-change-transform"
       >
         {/* Image Container */}
         <div
@@ -52,42 +47,40 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           onMouseEnter={() => setCurrentImageIndex(1)}
           onMouseLeave={() => setCurrentImageIndex(0)}
         >
-          {/* Background Image (prevents flash) */}
+          {/* Primary Image */}
           <img
             src={product.images[0]}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            aria-hidden="true"
+            alt={product.name}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+              currentImageIndex === 0 ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading="lazy"
           />
           
-          {/* Animated Image */}
-          <motion.img
-            key={currentImageIndex}
-            src={product.images[currentImageIndex] || product.images[0]}
-            alt={product.name}
-            className="absolute inset-0 h-full w-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          />
+          {/* Secondary Image */}
+          {product.images[1] && (
+            <img
+              src={product.images[1]}
+              alt={product.name}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                currentImageIndex === 1 ? 'opacity-100' : 'opacity-0'
+              }`}
+              loading="lazy"
+            />
+          )}
 
           {/* Subtle gradient for text readability */}
           <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
 
           {/* Discount Badge */}
           {product.discountPercent && (
-            <motion.div
-              initial={{ scale: 0, rotate: -15 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
-              className="absolute top-3 left-3 bg-accent text-accent-foreground px-2.5 py-1 rounded-full text-xs font-bold shadow-lg"
-            >
+            <div className="absolute top-3 left-3 bg-accent text-accent-foreground px-2.5 py-1 rounded-full text-xs font-bold shadow-lg">
               {product.discountPercent}% OFF
-            </motion.div>
+            </div>
           )}
 
-          {/* Wishlist Button - Always visible with subtle background */}
-          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
+          {/* Wishlist Button */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <WishlistButton 
               productId={product.id} 
               productName={product.name}
@@ -96,7 +89,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </div>
 
           {/* Quick View Indicator */}
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center pb-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="text-white text-xs font-medium bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full">
               View Details
             </span>
@@ -167,7 +160,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             </Button>
           )}
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 };
