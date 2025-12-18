@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import TrackOrder from "@/pages/TrackOrder";
 import PaymentSuccess from "@/pages/PaymentSuccess";
 import PaymentFailed from "@/pages/PaymentFailed";
+import PoliciesPage from "@/pages/policies/PoliciesPage";
 const queryClient = new QueryClient();
 
 // Animated Routes component
@@ -112,6 +113,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <Wishlist />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/policies"
+          element={
+            <PageTransition>
+              <PoliciesPage />
             </PageTransition>
           }
         />

@@ -1,0 +1,143 @@
+.policies-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, sans-serif;
+  line-height: 1.7;
+}
+
+.policies-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.policies-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.policies-header p {
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.policies-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  gap: 1rem;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  border-color: #3b82f6;
+}
+
+.tab-btn.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.policy-section h2 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+}
+
+.intro-text {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #10b981;
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+}
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.policy-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.policy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+}
+
+.policy-card h3 {
+  color: #1f2937;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.policy-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.policy-card li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.policy-card li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.policies-footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.policies-footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .policies-container {
+    padding: 1rem;
+  }
+  
+  .policies-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .policies-tabs {
+    flex-direction: column;
+  }
+}
