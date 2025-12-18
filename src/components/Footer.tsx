@@ -248,7 +248,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/shipping-policy"
+                  to="/policies#shipping-policy"
                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
                 >
                   Shipping Policy

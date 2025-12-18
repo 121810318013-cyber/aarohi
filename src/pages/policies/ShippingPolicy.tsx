@@ -4,7 +4,7 @@ import { ArrowLeft, Truck, Package, Clock, MapPin } from "lucide-react";
 
 const ShippingPolicy: React.FC = () => {
   return (
-    <div className="shipping-container">
+    <div id="shipping-policy" className="shipping-container">
       <div className="shipping-header">
         <Link to="/policies" className="back-link">
           <ArrowLeft className="h-5 w-5" />
