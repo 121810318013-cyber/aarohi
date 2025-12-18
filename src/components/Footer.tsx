@@ -246,6 +246,14 @@ export const Footer = () => {
                   Privacy Policy
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/shipping-policy"
+                  className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  Shipping Policy
+                </Link>
+              </li>
             </ul>
           </div>
 

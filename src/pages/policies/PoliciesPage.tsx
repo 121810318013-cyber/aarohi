@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import TermsConditions from "./TermsConditions";
 import PrivacyPolicy from "./PrivacyPolicy";
+import ShippingPolicyContent from "./ShippingPolicy";
 import "./PoliciesPage.css";
 
 const PoliciesPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"terms" | "privacy">("terms");
+  const [activeTab, setActiveTab] = useState<"terms" | "privacy" | "shipping">(
+    "terms"
+  );
 
   return (
     <div className="policies-container">
@@ -26,11 +29,18 @@ const PoliciesPage: React.FC = () => {
         >
           Privacy Policy
         </button>
+        <button
+          className={`tab-btn ${activeTab === "shipping" ? "active" : ""}`}
+          onClick={() => setActiveTab("shipping")}
+        >
+          Shipping Policy
+        </button>
       </div>
 
       <div className="policies-content">
         {activeTab === "terms" && <TermsConditions />}
         {activeTab === "privacy" && <PrivacyPolicy />}
+        {activeTab === "shipping" && <ShippingPolicyContent />}
       </div>
 
       <div className="policies-footer">

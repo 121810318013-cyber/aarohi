@@ -12,7 +12,7 @@ import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { PageTransition } from "@/components/PageTransition";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AnimatePresence } from "framer-motion";
-
+import ShippingPolicy from "./pages/policies/ShippingPolicy";
 import Home from "./pages/Home";
 import Collections from "./pages/Collections";
 import ProductDetail from "./pages/ProductDetail";
@@ -121,6 +121,14 @@ const AnimatedRoutes = () => {
           element={
             <PageTransition>
               <PoliciesPage />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/shipping-policy"
+          element={
+            <PageTransition>
+              <ShippingPolicy />
             </PageTransition>
           }
         />
