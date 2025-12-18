@@ -6,10 +6,6 @@ const ShippingPolicy: React.FC = () => {
   return (
     <div id="shipping-policy" className="shipping-container">
       <div className="shipping-header">
-        <Link to="/policies" className="back-link">
-          <ArrowLeft className="h-5 w-5" />
-          Back to Policies
-        </Link>
         <div className="header-content">
           <h1 className="shipping-title">Shipping Policy</h1>
           <p className="shipping-subtitle">
