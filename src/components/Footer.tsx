@@ -65,7 +65,24 @@
 //                   to="/track-order"
 //                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
 //                 >
-//                   Track your order
+//                   Track Order
+//                 </Link>
+//               </li>
+//             </ul>
+//           </div>
+
+//           {/* Legal & Policies */}
+//           <div>
+//             <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+//               Legal & Policies
+//             </h4>
+//             <ul className="space-y-1.5 sm:space-y-2">
+//               <li>
+//                 <Link
+//                   to="/policies"
+//                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
+//                 >
+//                   Policies
 //                 </Link>
 //               </li>
 //               <li>
@@ -74,6 +91,30 @@
 //                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
 //                 >
 //                   Returns Policy
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link
+//                   to="/policies#terms"
+//                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
+//                 >
+//                   Terms & Conditions
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link
+//                   to="/policies#privacy"
+//                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
+//                 >
+//                   Privacy Policy
+//                 </Link>
+//               </li>
+//               <li>
+//                 <Link
+//                   to="/policies#shipping-policy"
+//                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
+//                 >
+//                   Shipping Policy
 //                 </Link>
 //               </li>
 //             </ul>
@@ -95,10 +136,6 @@
 //                   info@aarohiselections.in
 //                 </span>
 //               </li>
-//               {/* <li className="flex items-center space-x-2">
-//                 <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
-//                 <span>Your Location</span>
-//               </li> */}
 //             </ul>
 //           </div>
 
@@ -129,6 +166,13 @@
 //         <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-border text-center">
 //           <p className="text-xs sm:text-sm text-muted-foreground">
 //             © {new Date().getFullYear()} Aarohi Selections. All rights reserved.
+//             |{" "}
+//             <Link
+//               to="/policies"
+//               className="hover:text-primary transition-smooth"
+//             >
+//               View Legal Policies
+//             </Link>
 //           </p>
 //         </div>
 //       </div>
@@ -136,7 +180,16 @@
 //   );
 // };
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Facebook,
+  Instagram,
+  Youtube,
+  Twitter,
+} from "lucide-react";
 import logo from "@/assets/logo.png";
 
 export const Footer = () => {
@@ -248,7 +301,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/policies#shipping-policy"
+                  to="/policies#shipping"
                   className="text-xs sm:text-sm text-muted-foreground hover:text-primary transition-smooth"
                 >
                   Shipping Policy
@@ -269,9 +322,12 @@ export const Footer = () => {
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
-                <span className="truncate text-[10px] sm:text-sm">
+                <a
+                  href="mailto:info@aarohiselections.in"
+                  className="truncate text-[10px] sm:text-sm hover:text-primary transition-smooth"
+                >
                   info@aarohiselections.in
-                </span>
+                </a>
               </li>
             </ul>
           </div>
@@ -297,6 +353,55 @@ export const Footer = () => {
                 </div>
               </li>
             </ul>
+          </div>
+        </div>
+
+        {/* Social Media Section */}
+        <div className="mt-8 pt-8 border-t border-border">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="text-center sm:text-left">
+              <h4 className="font-semibold mb-3 text-sm sm:text-base text-muted-foreground">
+                Follow Us
+              </h4>
+              <div className="flex space-x-3">
+                <a
+                  href="https://facebook.com/aarohiselections"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 hover:bg-primary/10 rounded-lg transition-all duration-200 hover:scale-110"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5 text-primary hover:text-blue-600" />
+                </a>
+                <a
+                  href="https://instagram.com/aarohiselections"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 hover:bg-primary/10 rounded-lg transition-all duration-200 hover:scale-110"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5 text-primary hover:text-pink-500" />
+                </a>
+                <a
+                  href="https://youtube.com/@aarohiselections"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 hover:bg-primary/10 rounded-lg transition-all duration-200 hover:scale-110"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="h-5 w-5 text-primary hover:text-red-500" />
+                </a>
+                <a
+                  href="https://twitter.com/aarohiselections"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 hover:bg-primary/10 rounded-lg transition-all duration-200 hover:scale-110"
+                  aria-label="Twitter"
+                >
+                  <Twitter className="h-5 w-5 text-primary hover:text-blue-400" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 

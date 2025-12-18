@@ -64,8 +64,13 @@ const PrivacyPolicy: React.FC = () => {
 
         <PrivacySection title="Contact">
           <p>
-            Grievance Officer: [Contact Details: aarohiselections@gmail.com /
-            +918639619426] | Phone: Mon-Fri 9:00-18:00
+            Grievance Officer:
+            <br />
+            Contact Details:
+            <br />
+            Email: aarohiselections@gmail.com | Phone: +918639619426
+            <br />
+            Mon-Fri 9:00-18:00
           </p>
         </PrivacySection>
       </div>
