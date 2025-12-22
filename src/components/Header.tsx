@@ -73,7 +73,6 @@ export const Header = () => {
           {/* Right Section */}
           <div className="flex items-center space-x-2">
             <ThemeToggle />
-            // In your Header component, add this search button:
             <Button
               variant="outline"
               size="icon"
