@@ -60,8 +60,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      content: "+91 XXXXX XXXXX",
-      description: "Monday to Sunday, 10 AM - 8 PM",
+      content: "+91 6303519426",
+      description: "Monday to Sunday, 10 AM - 5 PM",
     },
     {
       icon: Mail,
@@ -209,13 +209,7 @@ const Contact = () => {
             <CardContent>
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-border">
-                  <span className="font-medium">Monday - Friday</span>
-                  <span className="text-muted-foreground">
-                    10:00 AM - 8:00 PM
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-border">
-                  <span className="font-medium">Saturday</span>
+                  <span className="font-medium">Monday - Saturday</span>
                   <span className="text-muted-foreground">
                     10:00 AM - 8:00 PM
                   </span>

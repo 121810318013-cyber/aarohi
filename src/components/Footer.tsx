@@ -407,8 +407,8 @@ export const Footer = () => {
 
         <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-border text-center">
           <p className="text-xs sm:text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Aarohi Selections. All rights reserved.
-            |{" "}
+            © {new Date().getFullYear()} AAROHI ENTERPRISES. All rights
+            reserved. |{" "}
             <Link
               to="/policies"
               className="hover:text-primary transition-smooth"
