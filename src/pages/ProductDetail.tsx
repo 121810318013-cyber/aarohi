@@ -13,16 +13,14 @@
 // import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 // import { motion } from "framer-motion";
 // import { WishlistButton } from "@/components/WishlistButton";
-// // import { SizeGuide } from "@/components/SizeGuide";
 // import {
 //   RecentlyViewed,
 //   addToRecentlyViewed,
 // } from "@/components/RecentlyViewed";
 // import { toast } from "sonner";
 // import axios from "axios";
-// // Import the type definition for Cart Item
-// //import { Product as CartProduct } from "@/context/CartContext"; // Adjust path if needed, e.g. '@/types/product'
 // import type { Product as CartProduct } from "@/types/product";
+
 // // --- Types matching Django API Response ---
 // interface APIColor {
 //   name: string;
@@ -57,19 +55,17 @@
 //   const [error, setError] = useState(false);
 //   const { cart, addToCart, updateQuantity } = useCart();
 //   const [selectedImage, setSelectedImage] = useState(0);
+//   const [scale, setScale] = useState(1);
 //   const BASE_URL = import.meta.env.VITE_API_URL;
+
 //   // Fetch Product Data
 //   useEffect(() => {
 //     const fetchProduct = async () => {
 //       try {
 //         setLoading(true);
-//         // Endpoint based on your adminapp/urls.py
 //         const response = await axios.get(`${BASE_URL}/products/${id}/detail/`);
 //         setProduct(response.data);
 //         setError(false);
-
-//         // Add to recently viewed if fetch success
-//         //if (id) addToRecentlyViewed(id);
 //       } catch (err) {
 //         console.error("Error fetching product:", err);
 //         setError(true);
@@ -88,7 +84,6 @@
 //   }, [product]);
 
 //   // Check cart status
-//   // Note: We convert product.id to string for comparison as Cart usually uses strings
 //   const cartItem = product
 //     ? cart.find((item) => item.id === product.id.toString())
 //     : null;
@@ -112,7 +107,6 @@
 //   };
 
 //   // --- Adapters & Handlers ---
-
 //   const getPrice = (p: APIProduct) =>
 //     typeof p.price === "string" ? parseFloat(p.price) : p.price;
 
@@ -124,24 +118,20 @@
 //   const handleAddToCart = () => {
 //     if (!product) return;
 
-//     // ADAPTER: Convert API Product -> Cart Product
 //     const productForCart: CartProduct = {
 //       id: product.id.toString(),
 //       name: product.name,
-//       //slug: product.slug,
 //       description: product.description,
 //       price: getPrice(product),
 //       discountPrice: getDiscountPrice(product),
 //       discountPercent: product.discountPercent,
 //       inStock: product.in_stock,
-//       // API returns IDs for category/fabric. Converting to string to satisfy type.
 //       category: product.category.toString(),
 //       fabricType: product.fabric_type
 //         ? product.fabric_type.toString()
 //         : "Standard",
 //       images: product.images.map((img) => img.image),
 //       colors: product.colors.map((c) => c.name),
-
 //       category_name: product.category_name,
 //       fabric_type_name: product.fabric_type_name,
 //     };
@@ -165,7 +155,6 @@
 //   };
 
 //   // --- Render States ---
-
 //   if (loading) {
 //     return (
 //       <div className="min-h-screen flex items-center justify-center">
@@ -208,7 +197,6 @@
 //           <Button variant="ghost" size="icon" onClick={handleShare}>
 //             <Share2 className="h-5 w-5" />
 //           </Button>
-//           {/* Ensure WishlistButton can handle numeric IDs if needed, or pass string */}
 //           <WishlistButton
 //             productId={product.id.toString()}
 //             productName={product.name}
@@ -217,7 +205,7 @@
 //       </motion.div>
 
 //       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-//         {/* Image Section with Zoom */}
+//         {/* Image Section with Double-Click Zoom */}
 //         <motion.div
 //           initial={{ opacity: 0, x: -20 }}
 //           animate={{ opacity: 1, x: 0 }}
@@ -226,7 +214,18 @@
 //           <div className="sticky top-24">
 //             <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border bg-muted mb-4">
 //               {currentImageSrc ? (
-//                 <TransformWrapper initialScale={1} minScale={1} maxScale={3}>
+//                 <TransformWrapper
+//                   initialScale={1}
+//                   minScale={1}
+//                   maxScale={3}
+//                   doubleClick={{ mode: "zoomIn" }}
+//                   wheel={{ disabled: true }}
+//                   pinch={{ disabled: true }}
+//                   panning={{ disabled: scale <= 1 }}
+//                   onTransformed={(ref) => {
+//                     setScale(ref.state.scale);
+//                   }}
+//                 >
 //                   <TransformComponent
 //                     wrapperClass="w-full h-full"
 //                     contentClass="w-full h-full"
@@ -250,7 +249,7 @@
 //                 </div>
 //               )}
 //               <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-sm z-10">
-//                 Pinch to zoom
+//                 Double tap to zoom
 //               </div>
 //             </div>
 
@@ -258,7 +257,10 @@
 //               {product.images.map((imgObj, index) => (
 //                 <button
 //                   key={index}
-//                   onClick={() => setSelectedImage(index)}
+//                   onClick={() => {
+//                     setSelectedImage(index);
+//                     setScale(1);
+//                   }}
 //                   className={`aspect-[3/4] overflow-hidden rounded-lg border-2 transition-smooth ${
 //                     selectedImage === index
 //                       ? "border-primary"
@@ -284,10 +286,6 @@
 //           className="space-y-6"
 //         >
 //           <div>
-//             {/* Note: Using IDs here as API returns IDs. To show names, you'd need to fetch Category map or update Serializer */}
-//             {/* <p className="text-sm text-muted-foreground mb-2">
-//               Category: {product.category} • Fabric: {product.fabric_type}
-//             </p> */}
 //             <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
 //             <div className="flex items-baseline space-x-3 mb-6">
 //               {product.discountPercent > 0 ? (
@@ -435,7 +433,7 @@
 // };
 
 // export default ProductDetail;
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Added useRef
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
@@ -458,7 +456,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import type { Product as CartProduct } from "@/types/product";
 
-// --- Types matching Django API Response ---
+// ... [Interfaces APIColor, APIImage, APIProduct remain the same] ...
 interface APIColor {
   name: string;
   hex_value: string;
@@ -492,10 +490,13 @@ const ProductDetail = () => {
   const [error, setError] = useState(false);
   const { cart, addToCart, updateQuantity } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [scale, setScale] = useState(1);
+
+  // State to track if we are currently zoomed in
+  const [isZoomed, setIsZoomed] = useState(false);
+
   const BASE_URL = import.meta.env.VITE_API_URL;
 
-  // Fetch Product Data
+  // ... [Fetch Product & Cart Logic remains the same] ...
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -510,7 +511,6 @@ const ProductDetail = () => {
         setLoading(false);
       }
     };
-
     if (id) fetchProduct();
   }, [id]);
 
@@ -520,7 +520,6 @@ const ProductDetail = () => {
     }
   }, [product]);
 
-  // Check cart status
   const cartItem = product
     ? cart.find((item) => item.id === product.id.toString())
     : null;
@@ -535,7 +534,7 @@ const ProductDetail = () => {
           url: window.location.href,
         });
       } catch {
-        // User cancelled
+        /* User cancelled */
       }
     } else {
       navigator.clipboard.writeText(window.location.href);
@@ -543,7 +542,7 @@ const ProductDetail = () => {
     }
   };
 
-  // --- Adapters & Handlers ---
+  // ... [Adapters & Handlers remain the same] ...
   const getPrice = (p: APIProduct) =>
     typeof p.price === "string" ? parseFloat(p.price) : p.price;
 
@@ -554,7 +553,6 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
-
     const productForCart: CartProduct = {
       id: product.id.toString(),
       name: product.name,
@@ -572,33 +570,28 @@ const ProductDetail = () => {
       category_name: product.category_name,
       fabric_type_name: product.fabric_type_name,
     };
-
     addToCart(productForCart);
     toast.success("Added to cart");
   };
 
   const handleIncrement = () => {
-    if (cartItem && product) {
+    if (cartItem && product)
       updateQuantity(product.id.toString(), cartItem.quantity + 1);
-    } else {
-      handleAddToCart();
-    }
+    else handleAddToCart();
   };
 
   const handleDecrement = () => {
-    if (cartItem && product) {
+    if (cartItem && product)
       updateQuantity(product.id.toString(), cartItem.quantity - 1);
-    }
   };
 
-  // --- Render States ---
-  if (loading) {
+  // ... [Render States remain the same] ...
+  if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
-  }
 
   if (error || !product) {
     return (
@@ -611,13 +604,13 @@ const ProductDetail = () => {
     );
   }
 
-  // Safe Image Access
   const currentImageSrc = product.images[selectedImage]?.image || "";
   const displayPrice = getPrice(product);
   const displayDiscountPrice = getDiscountPrice(product);
 
   return (
     <div className="min-h-screen container mx-auto px-4 py-4 sm:py-8">
+      {/* ... [Header & Navigation remains the same] ... */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -642,7 +635,7 @@ const ProductDetail = () => {
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Image Section with Double-Click Zoom */}
+        {/* --- Image Section with Fixed Zoom Logic --- */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -655,12 +648,23 @@ const ProductDetail = () => {
                   initialScale={1}
                   minScale={1}
                   maxScale={3}
-                  doubleClick={{ mode: "zoomIn" }}
-                  wheel={{ disabled: true }}
-                  pinch={{ disabled: true }}
-                  panning={{ disabled: scale <= 1 }}
+                  // Smart Toggle Logic:
+                  // 1. If currently zoomed (scale > 1), double click triggers 'reset' (zooms out).
+                  // 2. If not zoomed (scale = 1), double click triggers 'zoomIn'.
+                  doubleClick={{
+                    disabled: false,
+                    mode: isZoomed ? "reset" : "zoomIn",
+                  }}
+                  // Disable pinch/pan/wheel when not zoomed to allow page scrolling
+                  pinch={{ disabled: !isZoomed }}
+                  panning={{ disabled: !isZoomed }}
+                  wheel={{ disabled: !isZoomed }}
+                  // Track scale changes to update state
                   onTransformed={(ref) => {
-                    setScale(ref.state.scale);
+                    const scale = ref.state.scale;
+                    // Optimization: Only update state if crossing the threshold
+                    if (scale > 1 && !isZoomed) setIsZoomed(true);
+                    if (scale <= 1 && isZoomed) setIsZoomed(false);
                   }}
                 >
                   <TransformComponent
@@ -685,8 +689,9 @@ const ProductDetail = () => {
                   {product.discountPercent}% OFF
                 </div>
               )}
-              <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-sm z-10">
-                Double tap to zoom
+
+              <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs backdrop-blur-sm z-10 pointer-events-none">
+                {isZoomed ? "Double tap to reset" : "Double tap to zoom"}
               </div>
             </div>
 
@@ -696,7 +701,7 @@ const ProductDetail = () => {
                   key={index}
                   onClick={() => {
                     setSelectedImage(index);
-                    setScale(1);
+                    setIsZoomed(false); // Reset zoom state when changing image
                   }}
                   className={`aspect-[3/4] overflow-hidden rounded-lg border-2 transition-smooth ${
                     selectedImage === index
@@ -715,13 +720,14 @@ const ProductDetail = () => {
           </div>
         </motion.div>
 
-        {/* Product Info */}
+        {/* --- Product Info Section (Unchanged) --- */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           className="space-y-6"
         >
+          {/* ... [Rest of the Product Info JSX remains exactly the same] ... */}
           <div>
             <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
             <div className="flex items-baseline space-x-3 mb-6">
@@ -755,7 +761,6 @@ const ProductDetail = () => {
             </p>
           </div>
 
-          {/* Colors */}
           <div className="border-t border-border pt-6">
             <h3 className="font-semibold mb-3">Color</h3>
             <div className="flex flex-wrap gap-3">
@@ -811,7 +816,6 @@ const ProductDetail = () => {
             </dl>
           </div>
 
-          {/* Add to Cart Actions */}
           <div className="border-t border-border pt-6 space-y-4">
             {!product.in_stock ? (
               <Button
@@ -853,7 +857,6 @@ const ProductDetail = () => {
                 Add to Cart
               </Button>
             )}
-
             <Link to="/cart" className="block">
               <Button variant="outline" size="lg" className="w-full">
                 View Cart
@@ -863,7 +866,6 @@ const ProductDetail = () => {
         </motion.div>
       </div>
 
-      {/* Recently Viewed */}
       <RecentlyViewed currentProductId={id || ""} />
     </div>
   );
